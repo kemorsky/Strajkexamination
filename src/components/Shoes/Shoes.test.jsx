@@ -27,6 +27,7 @@ describe('Shoes', () => {
 
     expect(removeShoe).toHaveBeenCalledWith('player1'); // Fixed typo
   });
+
   test('it should let me remove shoes if i happen to click the button one too many times', () => {
     const removeShoe = vi.fn(); // Creating a mock function using vi.fn()
     const updateSize = vi.fn()

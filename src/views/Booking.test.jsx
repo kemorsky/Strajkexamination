@@ -32,7 +32,4 @@ describe('Booking', () => {
         })
     })
 
-    test('it should let me choose shoe size for each player', async () => {
-        render
-    })
 })
