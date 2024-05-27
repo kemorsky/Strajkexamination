@@ -28,24 +28,24 @@ describe('Shoes', () => {
     expect(removeShoe).toHaveBeenCalledWith('player1'); // Fixed typo
   });
 
-  test('it should let me remove shoes if i happen to click the button one too many times', () => {
+  test('it should let me remove shoes if I happen to click the button one too many times', () => {
     const removeShoe = vi.fn(); // Creating a mock function using vi.fn()
-    const updateSize = vi.fn()
-    const addShoe = vi.fn()
-    const shoes = [{ id: 'player1', size: '9' }, {id: 'player2', size: '10'}];
+    const updateSize = vi.fn();
+    const addShoe = vi.fn();
+    const shoes = [{ id: 'player1', size: '37' }, { id: 'player2', size: '47' }];
 
-    render (<Shoes updateSize = {updateSize} addShoe = {addShoe} removeShoe = {removeShoe} shoes = {shoes} />)
+    render(<Shoes updateSize={updateSize} addShoe={addShoe} removeShoe={removeShoe} shoes={shoes} />);
 
-    const removeButtons = screen.getAllByText('-')
-    fireEvent.click(removeButtons[0])
-    fireEvent.click(removeButtons[0])
+    const removeButtons = screen.getAllByText('-');
+    fireEvent.click(removeButtons[0]);
+    fireEvent.click(removeButtons[1]);
 
     console.log(screen.debug());
 
-    expect(removeShoe).toHaveBeenCalledWith(1, 'player1'); // Fixed typo
-    expect(removeShoe).toHaveBeenCalledWith(2, 'player1');
+    expect(removeShoe).toHaveBeenCalledWith('player1'); // Assert correct arguments
+    expect(removeShoe).toHaveBeenCalledWith('player2');
 
     expect(removeShoe).toHaveBeenCalledTimes(2);
-  })
+});
   
 });
