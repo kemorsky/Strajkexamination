@@ -8,7 +8,8 @@ function Input({
   handleChange,
   defaultValue,
   disabled,
-}) {   const id = `input-${name}`; // create a unique id for the input based on the name
+}) {   
+  const id = `input-${name}`; // create a unique id for the input based on the name
 
   return (
     <section className='input'>
@@ -21,6 +22,7 @@ function Input({
         onChange={handleChange}
         defaultValue={defaultValue ? defaultValue : ''}
         disabled={disabled}
+        data-testid={`input-${label}`}  // Add this line to include the data-testid from props
       />
     </section>
   );

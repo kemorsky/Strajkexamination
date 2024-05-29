@@ -1,5 +1,4 @@
 import './BookingInfo.scss';
-
 import Input from '../Input/Input';
 
 function BookingInfo({ updateBookingDetails }) {
@@ -10,28 +9,28 @@ function BookingInfo({ updateBookingDetails }) {
       </header>
       <form className='booking-info__details'>
         <section className='booking-info__when'>
-          <Input 
+          <Input
             label='Date'
             type='date'
             customClass='booking-info__date'
             name='when'
             handleChange={updateBookingDetails}
           />
-          <Input 
+          <Input
             label='Time'
             type='time'
             name='time'
             handleChange={updateBookingDetails}
           />
         </section>
-        <Input 
+        <Input
           label='Number of awesome bowlers'
           type='number'
           customClass='booking-info__who'
           name='people'
           handleChange={updateBookingDetails}
         />
-        <Input 
+        <Input
           label='Number of lanes'
           type='number'
           customClass='booking-info__lanes'

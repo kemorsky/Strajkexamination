@@ -1,4 +1,5 @@
 import { http, HttpsResponse } from 'msw';
+import handlers from './handlers';
 
 const mockResponse = { status: 'success' };
 
@@ -19,6 +20,8 @@ const bowlers = [
   }
 
 ]
+
+console.log(bowlers)
 
 export const handlers = [
   http.post('https://h5jbtjv6if.execute-api.eu-north-1.amazonaws.com/', () => {

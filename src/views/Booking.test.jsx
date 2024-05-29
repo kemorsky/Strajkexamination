@@ -1,35 +1,48 @@
-import {screen, fireEvent, render, waitFor} from '@testing-library/react'
+import { screen, fireEvent, render, waitFor } from '@testing-library/react';
+import Booking from './Booking';
+import { expect } from 'vitest';
 
-import Booking from './Booking'
 
 describe('Booking', () => {
-    test('it should let me select date, time, and number of players', async () => {
-        // render(<Booking />) 
+  it('should be able to make a booking and get a total price and a booking number', async () => {
 
-        // const dateInput = screen.getByLabelText('Date')
-        // const timeInput = screen.getByLabelText('Time')
-        // const playersInput = screen.getByLabelText('Number of awesome bowlers');
-        // const lanesInput = screen.getByLabelText('Number of lanes');
-        
-        // fireEvent.change(dateInput, {target: { value: '2024-05-22'}})
-        // fireEvent.change(timeInput, { target: { value: '10:00' } });
-        // fireEvent.change(playersInput, { target: { value: '4' } });
-        // fireEvent.change(lanesInput, { target: { value: '2' } });
+    const { container } = render(<Booking />);
 
-        // await waitFor(() => {
-        //     expect(dateInput.value).toBe('2024-05-22')
-        //     expect(timeInput.value).toBe('10:00')
-        //     expect(playersInput.value).toBe('4')
-        //     expect(lanesInput.value).toBe('2')
-        // })
+        const dateInput = screen.getByTestId('input-Date');
+        const timeInput = screen.getByTestId('input-Time');
+        const peopleInput = screen.getByTestId('input-Number of awesome bowlers');
+        const lanesInput = screen.getByTestId('input-Number of lanes');
 
-        // const bookButton = screen.getByText('strIIIIIike!')
-        // fireEvent.click(bookButton)
+        fireEvent.change(dateInput, { target: { value: '2024-05-31' } });
+        fireEvent.change(timeInput, { target: { value: '13:00' } });
+        fireEvent.change(peopleInput, { target: { value: '2' } });
+        fireEvent.change(lanesInput, { target: { value: '1' } });
 
-        // const errorMessage = screen.queryByText('Error');
-        // await waitFor(() => {
-        //     expect(errorMessage).not.toBeInTheDocument()
-        // })
-    })
+        const addButton = screen.getByText("+");
 
-})
+        fireEvent.click(addButton);
+        fireEvent.click(addButton);
+
+        await waitFor(() => {
+
+            const shoeInput = container.querySelectorAll(".shoes__input");
+
+            fireEvent.change(shoeInput[0], { target: { value: '42' } });
+            fireEvent.change(shoeInput[1], { target: { value: '38' } });
+
+        });
+
+        fireEvent.click(screen.getByText('strIIIIIike!'));
+
+        await waitFor(() => {
+
+            expect(screen.getByText('See you soon!')).toBeInTheDocument();
+            expect(screen.getByDisplayValue(/2024-05-28 12:00/i)).toBeInTheDocument();
+            expect(screen.getByDisplayValue('STR3643ZVUZ')).toBeInTheDocument();
+            expect(screen.getByText('580 sek')).toBeInTheDocument();
+        })
+
+screen.debug();
+    });
+
+});

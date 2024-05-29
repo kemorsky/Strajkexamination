@@ -28,5 +28,6 @@ describe("Bookinginfo Component", () => {
       expect(timeInput.value).toBe("12:00");
       expect(peopleInput.value).toBe("1");
       expect(lanesInput.value).toBe("1");
+
     });
   });
