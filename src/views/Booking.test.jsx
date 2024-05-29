@@ -1,47 +1,100 @@
-import { screen, fireEvent, render, waitFor } from '@testing-library/react';
-import Booking from './Booking';
-import { expect } from 'vitest';
+import React from 'react';
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { describe, it, expect, beforeAll, afterEach, afterAll } from "vitest";
+import Booking from "./Booking";
+import { setupServer } from "msw/node";
+import { http, HttpResponse } from "msw";
 
-describe('Booking', () => {
-  it('should be able to make a booking and get a total price and a booking number', async () => {
+const handlers = [
+  http.post(
+    'https://h5jbtjv6if.execute-api.eu-north-1.amazonaws.com/',
+    async ({ request }) => {
+      // Read the intercepted request body as JSON
+      const newBooking = await request.json();
+      console.log('new Mock POST request', newBooking);
 
-    const { container } = render(<Booking />);
+      return HttpResponse.json(
+        {
+          when: "2024-05-28T12:00",
+          lanes: "1",
+          people: "4",
+          shoes: ["42", "43", "46", "48"],
+          price: 580,
+          id: "STR3643ZVUZ",
+          active: true
+        },
+        { status: 201 }
+      );
+    }
+  ),
+];
 
-        const dateInput = screen.getByTestId('input-Date');
-        const timeInput = screen.getByTestId('input-Time');
-        const peopleInput = screen.getByTestId('input-Number of awesome bowlers');
-        const lanesInput = screen.getByTestId('input-Number of lanes');
+// Set up the server
+const server = setupServer(...handlers);
 
-        fireEvent.change(dateInput, { target: { value: '2024-05-31' } });
-        fireEvent.change(timeInput, { target: { value: '13:00' } });
-        fireEvent.change(peopleInput, { target: { value: '2' } });
-        fireEvent.change(lanesInput, { target: { value: '1' } });
+// Start server before all tests
+beforeAll(() => server.listen());
 
-        const addButton = screen.getByText("+");
+// Reset handlers after each test
+afterEach(() => server.resetHandlers());
 
-        fireEvent.click(addButton);
-        fireEvent.click(addButton);
+// Stop server after all tests
+afterAll(() => server.close());
 
-        await waitFor(() => {
 
-            const shoeInput = container.querySelectorAll(".shoes__input");
-
-            fireEvent.change(shoeInput[0], { target: { value: '42' } });
-            fireEvent.change(shoeInput[1], { target: { value: '38' } });
-
-        });
-
-        fireEvent.click(screen.getByText('strIIIIIike!'));
-
-        await waitFor(() => {
-
-            expect(screen.getByText('See you soon!')).toBeInTheDocument();
-            expect(screen.getByDisplayValue(/2024-05-28 12:00/i)).toBeInTheDocument();
-            expect(screen.getByDisplayValue('STR3643ZVUZ')).toBeInTheDocument();
-            expect(screen.getByText('580 sek')).toBeInTheDocument();
-        })
-
-screen.debug();
+describe("Booking Component", () => {
+    it("The user can make a booking request", async () => {
+      render(<Booking />);
+  
+      // Fill in the form with test data
+      fireEvent.change(screen.getByLabelText(/Date/i), {
+        target: { value: "2024-05-04" },
+      });
+      fireEvent.change(screen.getByLabelText(/Time/i), {
+        target: { value: "10:01" },
+      });
+      fireEvent.change(screen.getByLabelText(/Number of lanes/i), {
+        target: { value: "1" },
+      });
+      fireEvent.change(screen.getByLabelText(/Number of awesome bowlers/i), {
+        target: { value: "4" },
+      });
+  
+      // Add shoe sizes
+      fireEvent.click(screen.getByText("+"));
+      fireEvent.change(screen.getByLabelText(/Shoe size \/ person 1/i), {
+        target: { value: "42" },
+      });
+      fireEvent.click(screen.getByText("+"));
+      fireEvent.change(screen.getByLabelText(/Shoe size \/ person 2/i), {
+        target: { value: "43" },
+      });
+      fireEvent.click(screen.getByText("+"));
+      fireEvent.change(screen.getByLabelText(/Shoe size \/ person 3/i), {
+        target: { value: "46" },
+      });
+      fireEvent.click(screen.getByText("+"));
+      fireEvent.change(screen.getByLabelText(/Shoe size \/ person 4/i), {
+        target: { value: "48" },
+      });
+  
+      // Submit the form
+      fireEvent.click(screen.getByText(/strIIIIIike!/i));
+  
+      // Wait for the confirmation message to appear
+      await waitFor(() => {
+        // Check for the confirmation message
+        expect(screen.getByText(/see you soon!/i)).toBeInTheDocument();
+      });
+  
+      // Verify form input values in the Booking component
+      expect(screen.getByDisplayValue("2024-05-28 12:00")).toBeInTheDocument();
+      expect(screen.getByDisplayValue("1")).toBeInTheDocument();
+      expect(screen.getByDisplayValue("4")).toBeInTheDocument();
+    
+      screen.debug()
+      expect(screen.getByDisplayValue("STR3643ZVUZ")).toBeInTheDocument();
     });
-
-});
+  
+  
+  });

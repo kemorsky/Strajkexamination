@@ -1,10 +1,19 @@
-import { setupServer } from 'msw/node';
-import { handlers } from './mocks/handlers';
-import { beforeAll, afterAll, afterEach } from 'vitest';
-import '@testing-library/jest-dom'
+// src/setupTest.js
+import { Response, Request, Headers } from 'node-fetch';
+import fetch from "node-fetch";
+import '@testing-library/jest-dom';
+import { afterEach } from 'vitest';
+import { cleanup } from '@testing-library/react';
+import * as matchers from '@testing-library/jest-dom/matchers';
 
-const server = setupServer(...handlers);
+global.Response = Response;
+global.Request = Request;
+global.Headers = Headers;
+global.fetch = fetch;
 
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
+afterEach(() => {
+  cleanup();
+});
+
+// Extend Vitest's expect with jest-dom matchers
+expect.extend(matchers);

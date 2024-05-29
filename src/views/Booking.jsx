@@ -84,6 +84,8 @@ function Booking() {
       }
     );
     const data = await response.json();
+    console.log(data)
+
 
     return data;
   }
@@ -108,10 +110,9 @@ function Booking() {
         people: booking.people,
         shoes: shoes.map((shoe) => shoe.size),
       };
-      console.log(bookingInfo)
 
       const confirmation = await sendBooking(bookingInfo);
-      //setConfirmation(confirmation);
+      setConfirmation(confirmation);
     } else {
       setError(true);
     }
