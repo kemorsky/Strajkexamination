@@ -2,7 +2,6 @@ import { screen, fireEvent, render, waitFor } from '@testing-library/react';
 import Booking from './Booking';
 import { expect } from 'vitest';
 
-
 describe('Booking', () => {
   it('should be able to make a booking and get a total price and a booking number', async () => {
 
