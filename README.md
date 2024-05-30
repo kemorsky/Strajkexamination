@@ -8,7 +8,8 @@ Strajk bowling
 Test fil: BookingInfo.test.jsx
 
 Acceptanskriterier: 
- It should book a lane at a specific time and date.
+
+ - It should book a lane at a specific time and date.
 
 <h1>User story 2:</h1>
 
@@ -17,7 +18,8 @@ Acceptanskriterier:
 Test fil: Shoes.test.jsx
 
 Acceptanskriterier:
- It should let me choose shoe size for each player.
+
+ - It should let me choose shoe size for each player.
 
 <h1>User story 3:</h1>
 
@@ -26,7 +28,8 @@ Acceptanskriterier:
  Test fil: Shoes.test.jsx
 
 Acceptanskriterier:
- It should let me remove shoes if I happen to click the button one too many times.
+
+ - It should let me remove shoes if I happen to click the button one too many times.
 
 <h1>User story 4:</h1>
 
@@ -35,7 +38,8 @@ Acceptanskriterier:
 Test fil: Booking.test.jsx
 
 Acceptanskriterier:
- It should let the user can make a booking request.
+
+ - It should let the user can make a booking request.
 
 <h1>User story 5:</h1>
 
@@ -44,11 +48,12 @@ Acceptanskriterier:
 Test fil: Confirmation.test.jsx
 
 Acceptanskriterier:
- It should display my active booking details correctly.
 
- It should call setConfirmation and navigate back when Sweet, lets go! button is clicked.
- 
- It should display inga bookning gjord! when there are no active bookings.
+ - It should display my active booking details correctly.
+
+ - It should call setConfirmation and navigate back when Sweet, lets go! button is clicked.
+
+ - It should display inga bookning gjord! when there are no active bookings.
  
 
 

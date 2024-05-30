@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor, waitForElementToBeRemoved } from "@testing-library/react";
 import { describe, it, expect, beforeAll, afterEach, afterAll } from "vitest";
 import Booking from "./Booking";
 import { setupServer } from "msw/node";
@@ -9,7 +9,6 @@ const handlers = [
   http.post(
     'https://h5jbtjv6if.execute-api.eu-north-1.amazonaws.com/',
     async ({ request }) => {
-      // Read the intercepted request body as JSON
       const newBooking = await request.json();
       console.log('new Mock POST request', newBooking);
 
@@ -95,6 +94,48 @@ describe("Booking Component", () => {
       screen.debug()
       expect(screen.getByDisplayValue("STR3643ZVUZ")).toBeInTheDocument();
     });
-  
-  
+
+  //   it('should display an error if all fields are not filled in', async () => {
+  //     render(<Booking />)
+
+  //     // Fill in some fields
+  //   fireEvent.change(screen.getByLabelText(/Date/i), {
+  //     target: { value: "2024-05-04" },
+  //   });
+  //   fireEvent.change(screen.getByLabelText(/Time/i), {
+  //     target: { value: "10:01" },
+  //   });
+  //   fireEvent.change(screen.getByLabelText(/Number of lanes/i), {
+  //     target: { value: "1" },
+  //   });
+
+  //   // Add shoe sizes
+  //   fireEvent.click(screen.getByText("+"));
+  //   fireEvent.change(screen.getByLabelText(/Shoe size \/ person 1/i), {
+  //     target: { value: "42" },
+  //   });
+    
+  //   // Leave the people field empty and try to book
+  //   fireEvent.click(screen.getByText(/strIIIIIike!/i));
+
+  //   // Check if error message is displayed
+  //   const errorMessage = await screen.findByText('Fill out all the fields and make sure that people and shoes is the same number.');
+  //   expect(errorMessage).toBeInTheDocument();
+    
+  //   // Fill in all fields and try to book again
+  //   fireEvent.change(screen.getByLabelText(/Number of awesome bowlers/i), {
+  //     target: { value: "4" },
+  //   });
+
+  //   fireEvent.click(screen.getByText(/strIIIIIike!/i));
+
+  //   // Check if error message is not displayed
+  //   await waitForElementToBeRemoved(() => screen.queryByText('Fill out all the fields and make sure that people and shoes is the same number.'), { timeout: 5000 });
+  // const errorMessageAfterSubmit = screen.queryByText('Fill out all the fields and make sure that people and shoes is the same number.');
+  // expect(errorMessageAfterSubmit).not.toBeInTheDocument();
+
+  // });
+
   });
+
+  
