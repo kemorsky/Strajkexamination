@@ -28,7 +28,7 @@ describe("Confirmation", () => {
     );
   });
 
-  it("should display booking details correctly", () => {
+  it("should display my active booking details correctly", () => {
     expect(screen.getByLabelText(/when/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/who/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/lanes/i)).toBeInTheDocument();

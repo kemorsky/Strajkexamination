@@ -43,7 +43,7 @@ afterAll(() => server.close());
 
 
 describe("Booking Component", () => {
-    it("The user can make a booking request", async () => {
+    it("should let the user can make a booking request", async () => {
       render(<Booking />);
   
       // Fill in the form with test data
