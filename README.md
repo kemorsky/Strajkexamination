@@ -1,2 +1,2 @@
-# wwewew
- ewewe
+Strajk bowling
+ Testning examination
