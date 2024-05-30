@@ -45,7 +45,9 @@ Test fil: Confirmation.test.jsx
 
 Acceptanskriterier:
  It should display my active booking details correctly.
+
  It should call setConfirmation and navigate back when Sweet, lets go! button is clicked.
+ 
  It should display inga bookning gjord! when there are no active bookings.
  
 
