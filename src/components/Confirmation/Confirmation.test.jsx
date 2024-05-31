@@ -36,7 +36,7 @@ describe("Confirmation", () => {
     expect(screen.getByText(/total/i)).toBeInTheDocument();
   });
 
-  it("should call setConfirmation and navigate back when Sweet, lets go! button is clicked", () => {
+  it("should call upon setConfirmation and navigate back when the Sweet, lets go! button is clicked", () => {
     const backButton = screen.getByText(/sweet, let's go!/i);
     fireEvent.click(backButton);
     expect(mockSetConfirmation).toHaveBeenCalledWith({});
